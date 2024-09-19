@@ -21,13 +21,7 @@ public class Payment {
 
 	public Payment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
-	
-
-
-
 
 	public Payment(int pId, String trackingid, int price, Mail mail) {
 		super();
@@ -64,18 +58,13 @@ public class Payment {
 		this.mail = mail;
 	}
 
-	
-	
-
 	public String getTrackingid() {
-		return trackingid;
-	}
+        return trackingid;
+    }
 
-
-
-	public void setTrackingid(String trackingid) {
-		this.trackingid = trackingid;
-	}
+    public void setTrackingid(String trackingid) {
+        this.trackingid = trackingid;
+    }
 	
 
 }

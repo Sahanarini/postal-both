@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.postal.hibrepoimplementation.AddressRepoImp;
-import com.postal.hibrepoimplementation.UserRepoImp;
 import com.postal.model.Address;
 import com.postal.service.AddressService;
 
@@ -19,7 +18,6 @@ public class AddressServiceImp implements AddressService {
 	private AddressRepoImp repo;
 	
 	public Address addAddress(Address address) {
-        // Save address and return the saved address (which includes any generated fields like ID)
         return repo.addAddress(address);
     }
 
@@ -31,7 +29,6 @@ public class AddressServiceImp implements AddressService {
 
 	@Override
 	public Address findByaddId(int id) {
-		// TODO Auto-generated method stub
 		return repo.findByaddId(id) ;
 	}
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.postal.model.Employee;
-import com.postal.model.Mail;
 import com.postal.model.PostOfficeHead;
 import com.postal.repository.EmployeeRepo;
 
@@ -24,7 +23,6 @@ public class EmployeeRepoImp implements EmployeeRepo {
 
 	@Override
 	public void addEmp(Employee emp) {
-		// TODO Auto-generated method stub
 		em.merge(emp);
 	}
 
@@ -39,7 +37,6 @@ public class EmployeeRepoImp implements EmployeeRepo {
 
 	@Override
 	public void updateEmp(Employee emp) {
-		// TODO Auto-generated method stub
 		em.merge(emp);
 
 	}
@@ -58,14 +55,6 @@ public class EmployeeRepoImp implements EmployeeRepo {
 		return (Employee) q.getSingleResult();
 	}
 
-//	@Override
-//	public Employee Login(String empEmail, String password) {
-//		Query q = em.createQuery("from Employee where empEmail =?1 and password = ?2");
-//		q.setParameter(1, empEmail);
-//		q.setParameter(2, password);
-//		return (Employee) q.getSingleResult();
-//	}
-
 	@Override
 	public Employee Login(String empEmail, String password) {
 		try {
@@ -74,11 +63,9 @@ public class EmployeeRepoImp implements EmployeeRepo {
 			q.setParameter("password", password);
 			return (Employee) q.getSingleResult();
 		} catch (NoResultException e) {
-			// No result found for the provided email and password
 			return null;
 		} catch (Exception e) {
-			// Handle other potential exceptions
-			e.printStackTrace(); // Log the exception for debugging
+			e.printStackTrace(); 
 			return null;
 		}
 	}
@@ -102,15 +89,14 @@ public class EmployeeRepoImp implements EmployeeRepo {
 		em.merge(emp);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> fetchAllEmp() {
-		// Create the query to select only the empId from Employee
 		Query q = em.createQuery("SELECT e.empId FROM Employee e");
-
-		// Execute the query and get the result list
 		return q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Employee> getEmployeeByPincode(int pincode) {
 		Query q = em.createQuery("SELECT e FROM Employee e WHERE e.pincode.pincode = :pincode");
@@ -118,6 +104,7 @@ public class EmployeeRepoImp implements EmployeeRepo {
 		return q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Employee> getEmployeesByToPincode(int toPincode) {
 	    Query q = em.createQuery(
 	        "SELECT e FROM Employee e JOIN Mail m ON e MEMBER OF m.employees JOIN m.address a WHERE a.toPincode = :toPincode"

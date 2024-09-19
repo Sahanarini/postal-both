@@ -8,7 +8,6 @@ import com.postal.model.Address;
 import com.postal.model.Mail;
 
 public interface MailService {
-	public void addMail(Mail mail);
 
 	public void delMail(int mId);
 
@@ -22,7 +21,7 @@ public interface MailService {
 
 	Optional<Address> getAddressByMailId(int mId);
 
-	public void addMal(String service, String articleType, String articlecontent, LocalDate createdAt, int price,
+	public Integer addMal(String service, String articleType, String articlecontent, LocalDate createdAt, int price,
 			int weight, int length, int height, int width, int value, String collectiondate, String time, String status,
 			Integer user, Integer address);
 

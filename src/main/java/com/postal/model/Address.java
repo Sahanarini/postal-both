@@ -21,7 +21,6 @@ public class Address {
 	private String toMobile;
 	public Address() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Address(int id, String toName, String toAddress, String toCountry, String toState, String toCity,
 			int toPincode, String toEmail, String toMobile) {

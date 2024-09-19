@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.postal.model.Address;
-import com.postal.model.User;
 import com.postal.repository.AddressRepo;
 
 import jakarta.persistence.EntityManager;

@@ -24,11 +24,6 @@ public class MailRepoImp implements MailRepo {
 	EntityManager em;
 
 	@Override
-	public void addMail(Mail mail) {
-		em.merge(mail);
-	}
-
-	@Override
 	public void delMail(int mId) {
 		Mail mail = em.find(Mail.class, mId);
 		if (mail != null) {
@@ -48,44 +43,30 @@ public class MailRepoImp implements MailRepo {
 
 	}
 
-//	@Override
-//	public Optional<String> findUserPincodeByMailId(int mId) {
-//		try {
-//			// JPQL Query to fetch pincode from User associated with the Mail
-//			Query query = em.createQuery("SELECT m.user.pincode FROM Mail m WHERE m.mId = :mId");
-//			query.setParameter("mId", mId);
-//			Integer pincode = (String) query.getSingleResult();
-//			return Optional.ofNullable(pincode);
-//		} catch (NoResultException e) {
-//			return Optional.empty(); // Handle the case where no result is found
-//		}
-//	}
 
 	@Override
 	public Optional<Integer> findUserPincodeByMailId(int mId) {
 		try {
-			// JPQL Query to fetch pincode from User associated with the Mail
 			Query query = em.createQuery("SELECT m.user.pincode FROM Mail m WHERE m.mId = :mId");
 			query.setParameter("mId", mId);
 			String pincodeString = (String) query.getSingleResult();
 			Integer pincode = Integer.valueOf(pincodeString); // Convert String to Integer
 			return Optional.ofNullable(pincode);
 		} catch (NoResultException e) {
-			return Optional.empty(); // Handle the case where no result is found
+			return Optional.empty(); 
 		}
 	}
 	
 	@Override
 	public Optional<Integer> findToPincodeByMailId(int mId) {
 		try {
-			// JPQL Query to fetch pincode from User associated with the Mail
 			Query query = em.createQuery("SELECT m.address.toPincode FROM Mail m WHERE m.mId = :mId");
 			query.setParameter("mId", mId);
 			String pincodeString = (String) query.getSingleResult();
-			Integer pincode = Integer.valueOf(pincodeString); // Convert String to Integer
+			Integer pincode = Integer.valueOf(pincodeString); 
 			return Optional.ofNullable(pincode);
 		} catch (NoResultException e) {
-			return Optional.empty(); // Handle the case where no result is found
+			return Optional.empty(); 
 		}
 	}
 
@@ -108,35 +89,37 @@ public class MailRepoImp implements MailRepo {
 		}
 	}
 
+	
+	
 	@Override
-	public void addMal(String service1, String articleType, String articlecontent, LocalDate createdAt, int price,
-			int weight, int length, int height, int width, int value, String collectiondate, String time, String status,
-			Integer user, Integer address) {
-		User reg = em.find(User.class, user);
-		Address add = em.find(Address.class, address);
+	public Mail addMal(String service1, String articleType, String articlecontent, LocalDate createdAt, int price,
+	                   int weight, int length, int height, int width, int value, String collectiondate, 
+	                   String time, String status, Integer user, Integer address) {
+	    User reg = em.find(User.class, user);
+	    Address add = em.find(Address.class, address);
 
-		Mail ml = new Mail();
-		ml.setService(service1);
-		ml.setArticleType(articleType);
-		ml.setArticlecontent(articlecontent);
-		ml.setCreatedAt(createdAt);
-		ml.setPrice(price);
-		ml.setWeight(weight);
-		ml.setLength(length);
-		ml.setHeight(height);
-		ml.setWidth(width);
-		ml.setValue(value);
-		ml.setCollectiondate(collectiondate);
-		ml.setTime(time);
-		ml.setStatus(status);
-		ml.setUser(reg); // Assuming reg is the User object
-		ml.setAddress(add); // Assuming add is the Address object
+	    Mail ml = new Mail();
+	    ml.setService(service1);
+	    ml.setArticleType(articleType);
+	    ml.setArticlecontent(articlecontent);
+	    ml.setCreatedAt(createdAt);
+	    ml.setPrice(price);
+	    ml.setWeight(weight);
+	    ml.setLength(length);
+	    ml.setHeight(height);
+	    ml.setWidth(width);
+	    ml.setValue(value);
+	    ml.setCollectiondate(collectiondate);
+	    ml.setTime(time);
+	    ml.setStatus(status);
+	    ml.setUser(reg);
+	    ml.setAddress(add);
 
-		em.persist(ml);
-
+	    em.persist(ml); 
+	    return ml; 
 	}
 
-	// need to be changed
+
 	@Override
 	public List<Mail> findMailsByPinCode(String pincode) {
 		String jpql = "SELECT m FROM Mail m WHERE m.user.pincode = :pincode";
@@ -152,15 +135,6 @@ public class MailRepoImp implements MailRepo {
 		query.setParameter("toPincode", toPincode);
 		return query.getResultList();
 	}
-
-//	@Override
-//	public List<Mail> getFromMailforEmployee(int empId) {
-//		String jpql ="SELECT m FROM Mail m JOIN m.employees e WHERE e.empId = :empId";
-//	    TypedQuery<Mail> query = em.createQuery(jpql, Mail.class);
-//	    query.setParameter("empId", empId);
-//
-//		return query.getResultList();
-//	}
 
 	@Override
 	public List<Mail> getFromMailforEmployee(int empId) {

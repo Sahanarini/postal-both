@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.postal.model.Employee;
 import com.postal.model.Payment;
 import com.postal.serviceimplementation.PaymentServiceImp;
 

@@ -18,7 +18,6 @@ public interface EmployeeService {
 
 	public Employee findById(int empId);
 
-//	public Employee updateSlot(int empId, int slot);
 
 	public Employee Login(String empEmail, String password);
 	

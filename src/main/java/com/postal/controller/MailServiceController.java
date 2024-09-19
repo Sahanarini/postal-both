@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Collections;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.postal.hibrepoimplementation.AddressRepoImp;
 import com.postal.model.Address;
-import com.postal.model.Employee;
 import com.postal.model.Mail;
-import com.postal.model.PostOfficeHead;
 import com.postal.model.User;
 import com.postal.serviceimplementation.MailServiceImp;
 
@@ -31,18 +27,13 @@ public class MailServiceController {
 	@Autowired
 	private MailServiceImp service;
 
-	@Autowired
-	private AddressRepoImp Addservice;
-
 	@GetMapping("/pincode/{mId}")
 	public ResponseEntity<?> getUserPincodeByMailId(@PathVariable("mId") int mId) {
 		Optional<Integer> pincodeOptional = service.findUserPincodeByMailId(mId);
 
 		if (pincodeOptional.isPresent()) {
-			// Return pincode as a JSON object with a key for consistency
 			return ResponseEntity.ok(Collections.singletonMap("pincode", pincodeOptional.get()));
 		} else {
-			// Return error message in a consistent JSON format
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(Collections.singletonMap("error", "Pincode not found for the given Mail ID."));
 		}
@@ -53,107 +44,50 @@ public class MailServiceController {
 		Optional<Integer> pincodeOptional = service.findToPincodeByMailId(mId);
 
 		if (pincodeOptional.isPresent()) {
-			// Return pincode as a JSON object with a key for consistency
 			return ResponseEntity.ok(Collections.singletonMap("pincode", pincodeOptional.get()));
 		} else {
-			// Return error message in a consistent JSON format
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(Collections.singletonMap("error", "Pincode not found for the given Mail ID."));
 		}
 	}
 
-//	 Address address = mail.getAddress();
-//     if (address.getId() == 0 || !addressRepository.existsById(address.getId())) {
-//         // Address does not exist or has no ID; save it
-//         addressRepository.save(address);
-//     }
-//     // Save the Mail entity
-//     mailRepository.save(mail);
-// }
-
-//	@PostMapping("/addMail")
-//	public ResponseEntity<String> addMail(@RequestBody Mail mail) {
-//		try {
-//			Address address = mail.getAddress();
-////			if (address.getId() == 0) {
-////				// Address does not exist or has no ID; save it
-////				Addservice.addAddress(address);
-////				
-////
-////			}
-//			
-//			service.addMail(mail);
-//			return ResponseEntity.ok("Mail added successfully");
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error adding Mail");
-//		}
-//	}
-
-//	@PostMapping("/addMail")
-//	public ResponseEntity<String> addMail(@RequestBody Mail mail) {
-//	    try {
-//	        // Fetch and set User if provided
-//	        User user = mail.getUser();
-//	        if (user != null && user.getUserId() > 0) {
-//	            // Fetch user by ID
-//	            User existingUser = service.findById(user.getUserId());
-//	            if (existingUser != null) {
-//	                mail.setUser(existingUser);
-//	            } else {
-//	                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found");
-//	            }
-//	        }
-//	        
-//	        // Fetch and set Address if provided
-//	        Address address = mail.getAddress();
-//	        if (address != null && address.getId() > 0) {
-//	            // Fetch address by ID
-//	            Address existingAddress = service.findByaddId(address.getId());
-//	            if (existingAddress != null) {
-//	                mail.setAddress(existingAddress);
-//	            } else {
-//	                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Address not found");
-//	            }
-//	        }
-//	        
-//	        service.addMail(mail);
-//	        return ResponseEntity.ok("Mail added successfully");
-//	    } catch (Exception e) {
-//	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error adding Mail: " + e.getMessage());
-//	    }
-//	}
-
 	@PostMapping("/addMail")
-	public ResponseEntity<String> addMail(@RequestBody Mail mail) {
+	public ResponseEntity<Map<String, Object>> addMal(@RequestBody Mail mail) {
+		Map<String, Object> response = new HashMap<>();
 		try {
-			// Fetch and set User if provided
 			User user = mail.getUser();
 			if (user != null && user.getUserId() > 0) {
-				// Fetch user by ID
 				User existingUser = service.findById(user.getUserId());
 				if (existingUser != null) {
 					mail.setUser(existingUser);
 				} else {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found");
+					response.put("error", "User not found");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 				}
 			}
 
-			// Fetch and set Address if provided
 			Address address = mail.getAddress();
 			if (address != null && address.getId() > 0) {
-				// Fetch address by ID
 				Address existingAddress = service.findByaddId(address.getId());
 				if (existingAddress != null) {
 					mail.setAddress(existingAddress);
 				} else {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Address not found");
+					response.put("error", "Address not found");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 				}
 			}
 
-			service.addMail(mail);
-			return ResponseEntity.ok("Mail added successfully");
+			Integer savedMailId = service.addMal(mail.getService(), mail.getArticleType(), mail.getArticlecontent(),
+					mail.getCreatedAt(), mail.getPrice(), mail.getWeight(), mail.getLength(), mail.getHeight(),
+					mail.getWidth(), mail.getValue(), mail.getCollectiondate(), mail.getTime(), mail.getStatus(),
+					mail.getUser().getUserId(), mail.getAddress().getId());
+
+			response.put("mId", savedMailId);
+			return ResponseEntity.ok(response);
+
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error adding Mail: " + e.getMessage());
+			response.put("error", "Error adding Mail: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}
 
@@ -192,20 +126,6 @@ public class MailServiceController {
 		return ResponseEntity.ok(mails);
 	}
 
-//	@PostMapping("/mails/assign/{mId}")
-//	public ResponseEntity<String> assignEmployeeToMail(@PathVariable("mId") int mId, @RequestBody Map<String, Integer> requestBody) {
-//	    try {
-//	        Integer employeeId = requestBody.get("empId");
-//	        if (employeeId == null) {
-//	            throw new RuntimeException("Employee ID is missing");
-//	        }
-//	        service.assignEmployeeToMail(mId, employeeId);
-//	        return ResponseEntity.ok("Employee assigned successfully");
-//	    } catch (RuntimeException e) {
-//	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//	    }
-//	}
-
 	@PostMapping("/mails/assign/{mId}")
 	public ResponseEntity<String> assignEmployeeToMail(@PathVariable("mId") int mId,
 			@RequestBody Map<String, Integer> requestBody) {
@@ -226,19 +146,19 @@ public class MailServiceController {
 		List<Mail> mails = service.getFromMailforEmployee(empId);
 		return ResponseEntity.ok(mails);
 	}
-	
+
 	@GetMapping("/tomailsofemployee/{empId}")
 	public ResponseEntity<List<Mail>> gettoMailsofEmployee(@PathVariable int empId) {
 		List<Mail> mails = service.getToMailforEmployee(empId);
 		return ResponseEntity.ok(mails);
 	}
-	
+
 	@PostMapping("/updateMailStatus")
 	public ResponseEntity<String> updateStatus(@RequestBody Map<String, Object> payload) {
 		try {
 			int mId = (Integer) payload.get("mId");
 			String status = (String) payload.get("status");
- 
+
 			boolean result = service.updatestatus(mId, status);
 			if (result) {
 				return ResponseEntity.ok("SUCCESS");
@@ -250,6 +170,5 @@ public class MailServiceController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("FAILURE");
 		}
 	}
-	
 
 }

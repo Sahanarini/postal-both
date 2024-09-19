@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.postal.hibrepoimplementation.UserRepoImp;
+import com.postal.model.Mail;
 import com.postal.model.User;
 import com.postal.service.UserService;
 
@@ -59,5 +60,11 @@ public class UserServiceImplementation implements UserService {
 		}
 		return user;	
 		}
+
+	@Override
+	public List<Mail> getAllUserMails(int userId) {
+		
+		return repo.getAllUserMails(userId);
+	}
 
 }

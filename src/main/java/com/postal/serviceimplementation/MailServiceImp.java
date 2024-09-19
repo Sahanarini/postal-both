@@ -35,10 +35,6 @@ public class MailServiceImp implements MailService {
 	@Autowired
 	private AddressRepoImp addrepo;
 
-	@Override
-	public void addMail(Mail mail) {
-		repo.addMail(mail);
-	}
 
 	@Override
 	public void delMail(int mId) {
@@ -52,20 +48,17 @@ public class MailServiceImp implements MailService {
 
 	@Override
 	public List<Mail> getAllMail() {
-		// TODO Auto-generated method stub
 		return repo.getAllMail();
 
 	}
 
 	@Override
 	public Mail findMailbyMailId(int mId) {
-		// TODO Auto-generated method stub
 		return repo.findMailbyMailId(mId);
 	}
 
 	@Override
 	public Optional<Integer> findUserPincodeByMailId(int mId) {
-		// TODO Auto-generated method stub
 		return repo.findUserPincodeByMailId(mId);
 	}
 
@@ -81,14 +74,22 @@ public class MailServiceImp implements MailService {
 		return addrepo.findByaddId(id);
 	}
 
+
 	@Override
-	public void addMal(String service, String articleType, String articlecontent, LocalDate createdAt, int price,
-			int weight, int length, int height, int width, int value, String collectiondate, String time, String status,
-			Integer user, Integer address) {
-		repo.addMal(service, articleType, articlecontent, createdAt, price, weight, length, height, width, value,
-				collectiondate, time, status, user, address);
+	public Integer addMal(String service, String articleType, String articlecontent, LocalDate createdAt, int price,
+	                      int weight, int length, int height, int width, int value, String collectiondate, 
+	                      String time, String status, Integer user, Integer address) {
+	    Mail savedMail = repo.addMal(service, articleType, articlecontent, createdAt, price, weight, 
+	                                  length, height, width, value, collectiondate, time, status, user, address);
+	    return savedMail.getmId(); 
 	}
 
+
+	
+	
+	
+	
+	
 	@Override
 	public List<Mail> getMailsByPinCode(String pincode) {
 		return repo.findMailsByPinCode(pincode);
@@ -108,11 +109,10 @@ public class MailServiceImp implements MailService {
 	public void assignEmployeeToMail(int mailId, int employeeId) {
 		Mail mail = repo.findMailbyMailId(mailId);
 		if (mail != null) {
-			// Assuming `Employee` is another repository/service that you have
-			Employee employee = emprepo.findById(employeeId);// fetch employee by ID from EmployeeRepo or similar
+			Employee employee = emprepo.findById(employeeId);
 			if (employee != null) {
 				mail.getEmployees().add(employee);
-				repo.updateMail(mail); // Update the mail entity with the new employee
+				repo.updateMail(mail); 
 			} else {
 				throw new RuntimeException("Employee not found");
 			}

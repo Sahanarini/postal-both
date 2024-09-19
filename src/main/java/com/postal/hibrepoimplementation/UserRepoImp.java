@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.postal.model.Mail;
 import com.postal.model.User;
 import com.postal.repository.UserRepo;
 
@@ -70,6 +71,15 @@ public class UserRepoImp implements UserRepo{
 		q.setParameter(1, email);
 		q.setParameter(2, password);
 		return (User) q.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Mail> getAllUserMails(int userId) {
+		Query query = em.createQuery("SELECT m FROM Mail m WHERE m.user.userId = :userId");
+	    query.setParameter("userId", userId);
+	    
+	    return query.getResultList();
 	}
 
 }

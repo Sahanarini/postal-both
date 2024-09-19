@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.postal.serviceimplementation.UserServiceImplementation;
+import com.postal.model.Mail;
 import com.postal.model.User;
 
 @RestController
@@ -29,22 +30,16 @@ public class UserController {
 		return "added";
 
 	}
-
-//	@GetMapping("/Login/{email}/{password}")
-//	public ResponseEntity<?> validateLogin(@PathVariable("email") String email,
-//			@PathVariable("password") String password) {
-//		try {
-//			User user = service.Login(email, password);
-//			if (user != null) {
-//				return ResponseEntity.ok(user);
-//			}
-//		} catch (Exception e) {
-//			System.out.println("Error user login");
-//
-//		}
-//
-//		return (ResponseEntity<?>) ResponseEntity.badRequest();
-//	}
+	
+	@GetMapping("/getallusermail/{id}")
+    public ResponseEntity<List<Mail>> getAllUserMails(@PathVariable("id") int userId) {
+        List<Mail> mails = service.getAllUserMails(userId);
+        if (mails.isEmpty()) {
+            return ResponseEntity.noContent().build(); 
+        }
+        return ResponseEntity.ok(mails); 
+    }
+	
 
 	@GetMapping("/Login/{email}/{password}")
 	public ResponseEntity<?> validateLogin(@PathVariable("email") String email,
@@ -54,11 +49,9 @@ public class UserController {
 			if (user != null) {
 				return ResponseEntity.ok(user);
 			} else {
-				// Return 404 Not Found if user is not found
 				return ResponseEntity.notFound().build();
 			}
 		} catch (Exception e) {
-			// Log the error and return a 500 Internal Server Error
 			System.out.println("Error user login: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
 		}

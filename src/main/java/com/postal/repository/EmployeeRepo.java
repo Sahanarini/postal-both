@@ -4,11 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.postal.model.Employee;
-import com.postal.model.Mail;
-import com.postal.model.PostOfficeHead;
 
 public interface EmployeeRepo {
 	public void addEmp(Employee emp);

@@ -1,6 +1,6 @@
 package com.postal.controller;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.postal.model.Address;
-import com.postal.model.User;
 import com.postal.serviceimplementation.AddressServiceImp;
 
 @RestController
@@ -23,14 +22,6 @@ public class AddressController {
 
 	@Autowired
 	private AddressServiceImp service;
-
-//	@PostMapping("/addAddress")
-//	public String userAddress(@RequestBody Address address) {
-//		service.addAddress(address);
-//		return "added";
-//
-//	}
-	
 	
 	@PostMapping("/addAddress")
 	public ResponseEntity<Address> userAddress(@RequestBody Address address) {

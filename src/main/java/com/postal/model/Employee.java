@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -37,12 +36,10 @@ public class Employee {
 	private String password;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "post_office_pincode", nullable = false)
 	private PostOfficeHead pincode;
 
 	public Employee() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Employee(int empId, String empName, long empMobile, String area, int slot, LocalDate deliverydate,

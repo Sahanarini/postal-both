@@ -6,11 +6,8 @@ import java.util.Optional;
 
 import com.postal.model.Address;
 import com.postal.model.Mail;
-import com.postal.model.User;
 
 public interface MailRepo {
-
-	public void addMail(Mail mail);
 
 	public void delMail(int mId);
 
@@ -24,7 +21,7 @@ public interface MailRepo {
 
 	Optional<Address> findAddressByMailId(int mId);
 
-	public void addMal(String service1, String articleType, String articlecontent, LocalDate createdAt, int price,
+	public Mail addMal(String service1, String articleType, String articlecontent, LocalDate createdAt, int price,
 			int weight, int length, int height, int width, int value, String collectiondate, String time, String status,
 			Integer user, Integer address);
 

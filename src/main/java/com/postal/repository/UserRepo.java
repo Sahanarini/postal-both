@@ -3,6 +3,7 @@ package com.postal.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.postal.model.Mail;
 import com.postal.model.User;
 
 
@@ -20,5 +21,7 @@ public interface UserRepo {
 	Optional<User> findByEmail(String email);
 
 	public User Login(String email, String password);
+	
+	List<Mail> getAllUserMails(int userId);
 
 }

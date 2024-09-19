@@ -52,17 +52,16 @@ public class Mail {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToOne(cascade = CascadeType.ALL) // Added cascade type
+	@OneToOne(cascade = CascadeType.ALL) 
 	@JoinColumn(name = "add_id")
 	private Address address;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "mail_id") // Foreign key in Employee table
+    @JoinColumn(name = "mail_id") 
     private List<Employee> employees = new ArrayList<>();
 
 	public Mail() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Mail(int mId, String service, String articleType, String articlecontent, LocalDate createdAt, int price,

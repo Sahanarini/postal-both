@@ -18,19 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.postal.model.Employee;
-import com.postal.model.PostOfficeHead;
 import com.postal.serviceimplementation.EmployeeServiceImp;
-import com.postal.serviceimplementation.PostOfficeServiceImp;
-
 @RestController
 @CrossOrigin("*")
 public class EmployeeController {
 
 	@Autowired
 	private EmployeeServiceImp service;
-//	@Autowired
-//	private PostOfficeServiceImp ser;
-//	
 
 	@PostMapping("/addEmployee")
 	public String employeeAdd(@RequestBody Employee emp) {
@@ -44,8 +38,7 @@ public class EmployeeController {
 		return service.getEmployeeByPincode(pincode);
 
 	}
-	
-	
+
 	@GetMapping("/getAllEmployeebytopincode/{toPincode}")
 	public List<Employee> getAllemployeebytopincode(@PathVariable("toPincode") int toPincode) {
 		return service.getEmployeesByToPincode(toPincode);
@@ -84,43 +77,23 @@ public class EmployeeController {
 
 	}
 
-//	@GetMapping("/EmployeeLogin/{empId}/{password}")
-//	public ResponseEntity<?> validateLogin(@PathVariable("empId") int empId,
-//			@PathVariable("password") String password) {
-//		try {
-//			Employee emp = service.Login(empId, password);
-//			if (emp != null) {
-//				return ResponseEntity.ok(emp);
-//			} else {
-//				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace(); // Log the exception
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
-//		}
-//	}
-	
-	
-	
 	@GetMapping("/EmployeeLogin/{empEmail}/{password}")
 	public ResponseEntity<?> validateLogin(@PathVariable("empEmail") String empEmail,
-	        @PathVariable("password") String password) {
-	    try {
-	        // Log incoming request for debugging
-	        System.out.println("Received request with empEmail: " + empEmail + " and password: " + password);
-	        
-	        Employee emp = service.Login(empEmail, password);
-	        if (emp != null) {
-	            return ResponseEntity.ok(emp);
-	        } else {
-	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace(); // Log the exception
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
-	    }
-	}
+			@PathVariable("password") String password) {
+		try {
+			System.out.println("Received request with empEmail: " + empEmail + " and password: " + password);
 
+			Employee emp = service.Login(empEmail, password);
+			if (emp != null) {
+				return ResponseEntity.ok(emp);
+			} else {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+		}
+	}
 
 	@GetMapping("/findById/{empId}")
 	public ResponseEntity<?> findEmp(@PathVariable("empId") int empId) {
@@ -132,26 +105,9 @@ public class EmployeeController {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
 			}
 		} catch (Exception e) {
-			// Log the exception with a logging framework
-			// For example: logger.error("Error finding employee by ID", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("An error occurred while processing the request");
 		}
 	}
-
-//	@SuppressWarnings("unchecked")
-//	@PutMapping("/{empId}/slot")
-//	public ResponseEntity<Employee> updateSlot(@PathVariable("empId") int empId, @RequestParam("slot") int slot) {
-//		try {
-//			// Call the service method to update the slot
-//			Employee updatedEmployee = service.updateSlot(empId, slot);
-//			if (updatedEmployee != null) {
-//				return ResponseEntity.ok(updatedEmployee);
-//			}
-//		} catch (RuntimeException e) {
-//			System.out.println("not found");
-//		}
-//		return (ResponseEntity<Employee>) ResponseEntity.badRequest();
-//	}
 
 }

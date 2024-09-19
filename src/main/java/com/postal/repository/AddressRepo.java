@@ -10,8 +10,4 @@ public interface AddressRepo {
 	
 	public Address findByaddId(int id);
 
-	
-	
-
-
 }

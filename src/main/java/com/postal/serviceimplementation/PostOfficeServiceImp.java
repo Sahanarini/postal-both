@@ -33,32 +33,27 @@ public class PostOfficeServiceImp implements PostOfficeService {
 
 	@Override
 	public void updatePo(PostOfficeHead po) {
-		// TODO Auto-generated method stub
 		repo.updatePo(po);
 		
 	}
 
 	@Override
 	public List<PostOfficeHead> getAllPos() {
-		// TODO Auto-generated method stub
 		return repo.getAllPos() ;
 	}
 
 	@Override
 	public PostOfficeHead findByPincode(int pincode) {
-		// TODO Auto-generated method stub
 		return repo.findByPincode(pincode) ;
 	}
 
 	@Override
 	public Optional<PostOfficeHead> findByCity(String city) {
-		// TODO Auto-generated method stub
 		return repo.findByCity(city) ;
 	}
 
 	@Override
 	public Optional<PostOfficeHead> findByState(String state) {
-		// TODO Auto-generated method stub
 		return repo.findByState(state);
 	}
 

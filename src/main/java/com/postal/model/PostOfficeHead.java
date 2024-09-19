@@ -1,15 +1,8 @@
 package com.postal.model;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class PostOfficeHead {
@@ -32,13 +25,8 @@ public class PostOfficeHead {
 	@Column(nullable = false)
 	private String password;
 
-//	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//	@JoinColumn(name = "post_office_id", nullable = true)
-//	private List<Employee> employee = new ArrayList<>();
-
 	public PostOfficeHead() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	
