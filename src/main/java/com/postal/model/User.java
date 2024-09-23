@@ -33,7 +33,6 @@ public class User {
 	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public User(int userId, String firstName, String lastName, String address, String email, String phoneNumber,

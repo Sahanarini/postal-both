@@ -17,7 +17,8 @@ import com.postal.model.PostOfficeHead;
 import com.postal.serviceimplementation.PostOfficeServiceImp;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class PostOfficeController {
 
 	@Autowired

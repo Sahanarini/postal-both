@@ -74,7 +74,6 @@ public class EmployeeRepoImp implements EmployeeRepo {
 	public void addEmpp(String empName, long empMobile, String area, int slot, LocalDate deliverydate,
 			LocalTime deliverytime, String empEmail, String password, Integer pincode) {
 		PostOfficeHead head = em.find(PostOfficeHead.class, pincode);
-
 		Employee emp = new Employee();
 		emp.setEmpName(empName);
 		emp.setEmpMobile(empMobile);
@@ -85,7 +84,6 @@ public class EmployeeRepoImp implements EmployeeRepo {
 		emp.setEmpEmail(empEmail);
 		emp.setPassword(password);
 		emp.setPincode(head);
-
 		em.merge(emp);
 	}
 

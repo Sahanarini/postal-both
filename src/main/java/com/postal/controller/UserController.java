@@ -18,7 +18,7 @@ import com.postal.model.Mail;
 import com.postal.model.User;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
 	@Autowired

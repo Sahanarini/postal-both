@@ -21,7 +21,7 @@ import com.postal.model.User;
 import com.postal.serviceimplementation.MailServiceImp;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MailServiceController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class MailServiceController {
 			return ResponseEntity.ok(Collections.singletonMap("pincode", pincodeOptional.get()));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(Collections.singletonMap("error", "Pincode not found for the given Mail ID."));
+					.body(Collections.singletonMap("errors", "Pincode not found for the given Mail ID."));
 		}
 	}
 
@@ -47,7 +47,7 @@ public class MailServiceController {
 			return ResponseEntity.ok(Collections.singletonMap("pincode", pincodeOptional.get()));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(Collections.singletonMap("error", "Pincode not found for the given Mail ID."));
+					.body(Collections.singletonMap("fetch error", "Pincode not found for the given Mail ID."));
 		}
 	}
 
@@ -61,7 +61,7 @@ public class MailServiceController {
 				if (existingUser != null) {
 					mail.setUser(existingUser);
 				} else {
-					response.put("error", "User not found");
+					response.put("errors", "User not found");
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 				}
 			}
@@ -72,7 +72,7 @@ public class MailServiceController {
 				if (existingAddress != null) {
 					mail.setAddress(existingAddress);
 				} else {
-					response.put("error", "Address not found");
+					response.put("errorsss", "Address not found");
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 				}
 			}
@@ -86,7 +86,7 @@ public class MailServiceController {
 			return ResponseEntity.ok(response);
 
 		} catch (Exception e) {
-			response.put("error", "Error adding Mail: " + e.getMessage());
+			response.put("errorsssss", "Error adding Mail: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 	}

@@ -29,7 +29,19 @@ public class PostOfficeHead {
 		super();
 	}
 
-	
+	public PostOfficeHead(int pincode, String postOfficeName, String officeType, String location, String state, String city,
+			String telephone, String role, String password) {
+		super();
+		this.pincode = pincode;
+		this.postOfficeName = postOfficeName;
+		this.officeType = officeType;
+		this.location = location;
+		this.state = state;
+		this.city = city;
+		this.telephone = telephone;
+		this.role = role;
+		this.password = password;
+	}
 
 	public String getState() {
 		return state;
@@ -55,19 +67,7 @@ public class PostOfficeHead {
 
 
 
-	public PostOfficeHead(int pincode, String postOfficeName, String officeType, String location, String state, String city,
-		String telephone, String role, String password) {
-	super();
-	this.pincode = pincode;
-	this.postOfficeName = postOfficeName;
-	this.officeType = officeType;
-	this.location = location;
-	this.state = state;
-	this.city = city;
-	this.telephone = telephone;
-	this.role = role;
-	this.password = password;
-}
+	
 
 
 

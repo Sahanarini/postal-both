@@ -24,7 +24,6 @@ public class Scheme {
 	
 	public Scheme() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Scheme(int sId, String schemeName, String description, byte[] doc) {
 		super();

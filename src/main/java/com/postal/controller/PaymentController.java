@@ -10,7 +10,8 @@ import com.postal.model.Payment;
 import com.postal.serviceimplementation.PaymentServiceImp;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class PaymentController {
 	
 	@Autowired
